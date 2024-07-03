@@ -99,30 +99,6 @@ enoe_load <- function(año,n_trim ) {
              return(data_enoe)
 }
 
-# 
-# url_gn_enoe <-'https://www.inegi.org.mx/contenidos/programas/enoe/15ymas/microdatos/2009trim3_csv.zip'
-# url_enoe  <- url_gn_enoe
-# sdem  <- "sdemt309.CSV"
-# # Temporal
-# td  <- tempdir()
-# #Temporal File
-# tf <- tempfile(tmpdir= td, fileext = ".zip")
-# dir.create(td, recursive = TRUE, showWarnings = FALSE)
-# #Downloading
-# download.file(url_enoe, tf)
-# #Names of zipped files
-# zipped_files <- as.data.frame(unzip(tf, list = TRUE,  overwrite=TRUE))$Name 
-# #SDEM
-# file_to_load <- zipped_files[grepl("(?i)sdem", zipped_files)]
-# #Unzip 
-# unzip(tf, files= file_to_load, exdir=td, overwrite=TRUE)
-# #Load
-# fpath <- file.path(td, file_to_load  )
-# #Unlink
-# unlink(td)
-# #Load file
-# data_enoe1 <- fread(fpath)
-# 
 #### ENOE list # ###
 enoe_list <- function(start_year, end_year, start_q, end_q) {
   df_list <- list()
