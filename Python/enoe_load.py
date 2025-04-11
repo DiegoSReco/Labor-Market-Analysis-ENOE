@@ -1,9 +1,10 @@
 def enoe_load(año, n_trim, tabla):
     url_gn_enoe = "https://www.inegi.org.mx/contenidos/programas/enoe/15ymas/microdatos"
     last_two_digits = str(año)[-2:]
+
     if (2005 <= año <= 2019) and (n_trim <= 4):
         list_url = [f"{url_gn_enoe}/{año}trim{n_trim}_csv.zip",
-                    f"{tabla}t{n_trim}{last_two_digits}.csv"]
+                    f"{tabla if tabla.islower() else tabla.lower()}t{n_trim}{last_two_digits}.csv"]
     elif año == 2020 and n_trim == 1:
         list_url = [
             f"{url_gn_enoe}/{año}trim{n_trim}_csv.zip",
@@ -23,19 +24,18 @@ def enoe_load(año, n_trim, tabla):
     elif año >= 2023 and n_trim >= 1:
         list_url = [
             f"{url_gn_enoe}/enoe_{año}_trim{n_trim}_csv.zip",
-            f"ENOE_{tabla}T{n_trim}{last_two_digits}.csv"]
+            f"ENOE_{tabla if tabla.isupper() else tabla.upper()}T{n_trim}{last_two_digits}.csv"]
     else:
         print("URL incorrecto")
         return None
-    #URLS enoe y tabla
     url_data = list_url[0]
     modulo = list_url[1]
-    #Ejecutar consulta
+    #Realizo la consulta
     request_data = requests.get(url_data).content
     #Guardo en zip file
     zip_form = ZipFile(BytesIO(request_data))
     #Cargamos datos
     with zip_form.open(modulo) as file:
-         df_enoe = pd.read_csv(file, encoding='latin-1', engine="pyarrow") 
+         df_enoe = pd.read_csv(file, engine = "pyarrow" ,  encoding='latin-1') 
 
     return df_enoe
